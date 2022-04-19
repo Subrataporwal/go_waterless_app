@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "781343367287",
+    "project_id": "gowaterlessapp",
+    "storage_bucket": "gowaterlessapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781343367287:android:ee2b826ec183a0af50e672",
+        "android_client_info": {
+          "package_name": "com.gowaterless"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781343367287-g4pujhp581epnr4heqa9e7f0v7bflr31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjZmiaDg1gSEGksOvdML5doOt6NG3nhPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781343367287-g4pujhp581epnr4heqa9e7f0v7bflr31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
