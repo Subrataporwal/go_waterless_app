@@ -1,6 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, override_on_non_overriding_member, prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_final_fields, unnecessary_new, annotate_overrides, unnecessary_this
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gowaterless_app/constant.dart';
+import 'package:gowaterless_app/pages/internet_connectivity.dart';
 import 'package:gowaterless_app/services/Car%20Detaling/CD_Service1.dart';
 import 'package:gowaterless_app/services/Car%20Detaling/CD_Service2.dart';
 import 'package:gowaterless_app/services/Car%20Detaling/CD_Service3.dart';
@@ -32,6 +34,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  var index = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -192,50 +195,74 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget OfferBanner1() => InkWell(
-        onTap: () {
-          showModalBottomSheet(
-              isDismissible: false,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20))),
-              context: context,
-              builder: (context) => Service1_Cars());
-        },
-        child: Container(
-          child: Image.asset('assets/images/banner1.png'),
-        ),
-      );
+      onTap: () {
+        showModalBottomSheet(
+            isDismissible: false,
+            isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            context: context,
+            builder: (context) => Service1_Cars());
+      },
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('slides').snapshots(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            final data = snapshot.requireData;
+            return Image.network(data.docs[index]['slide1']);
+          }));
   Widget OfferBanner2() => InkWell(
-        onTap: () {
-          showModalBottomSheet(
-              isDismissible: false,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20))),
-              context: context,
-              builder: (context) => Service1_Cars());
-        },
-        child: Container(
-          child: Image.asset('assets/images/banner2.png'),
-        ),
-      );
+      onTap: () {
+        showModalBottomSheet(
+            isDismissible: false,
+            isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            context: context,
+            builder: (context) => Service1_Cars());
+      },
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('slides').snapshots(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            final data = snapshot.requireData;
+            return Image.network(data.docs[index]['slide2']);
+          }));
   Widget OfferBanner3() => InkWell(
-        onTap: () {
-          showModalBottomSheet(
-              isDismissible: false,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20))),
-              context: context,
-              builder: (context) => Service2_Cars());
-        },
-        child: Container(
-          child: Image.asset('assets/images/banner3.png'),
-        ),
-      );
+      onTap: () {
+        showModalBottomSheet(
+            isDismissible: false,
+            isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            context: context,
+            builder: (context) => Service2_Cars());
+      },
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('slides').snapshots(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            final data = snapshot.requireData;
+            return Image.network(data.docs[index]['slide3']);
+          }));
 
   //Widgets For Services Start Here
   // ignore:
@@ -408,9 +435,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
 
             //Hackback Button
             InkWell(

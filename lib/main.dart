@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gowaterless_app/pages/splash.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'dart:async';
+import 'package:connection_notifier/connection_notifier.dart';
 
 int? isviewed;
 void main() async {
@@ -57,13 +58,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Go Waterless App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ConnectionNotifier(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Go Waterless App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: isviewed != 0 ? OnBoard() : SplashScreen(),
       ),
-      home: isviewed != 0 ? OnBoard() : SplashScreen(),
     );
   }
 }

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:connection_notifier/connection_notifier.dart';
 import 'package:gowaterless_app/constant.dart';
 import 'package:gowaterless_app/pages/Dashboard.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'Dashboard.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
+import 'package:open_settings/open_settings.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -137,8 +139,41 @@ class _BookingAppState extends State<BookingApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Dashboard(),
-    );
+        body: ConnectionNotifierToggler(
+      onConnectionStatusChanged: (connected) {
+        /// that means it is still in the initialization phase.
+        if (connected == null) return;
+        print(connected);
+      },
+      connected: Dashboard(),
+      disconnected: Center(
+          key: UniqueKey(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Internet Connection Lost',
+                style: GoogleFonts.poppins(
+                    fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Text(
+                  'Make sure your phone is connected to the WIFI or switch to mobile data.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 300,
+                child: Image.asset('assets/images/404.png'),
+              ),
+            ],
+          )),
+    ));
   }
 }
 
@@ -239,11 +274,44 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebView(
+        body: ConnectionNotifierToggler(
+      onConnectionStatusChanged: (connected) {
+        /// that means it is still in the initialization phase.
+        if (connected == null) return;
+        print(connected);
+      },
+      connected: WebView(
         javascriptMode: JavascriptMode.unrestricted,
         initialUrl: 'https://www.gowaterless.in/customer-dashboard/',
       ),
-    );
+      disconnected: Center(
+          key: UniqueKey(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Internet Connection Lost',
+                style: GoogleFonts.poppins(
+                    fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Text(
+                  'Make sure your phone is connected to the WIFI or switch to mobile data.',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 300,
+                child: Image.asset('assets/images/404.png'),
+              ),
+            ],
+          )),
+    ));
   }
 }
 // BottomNavigationBar(
